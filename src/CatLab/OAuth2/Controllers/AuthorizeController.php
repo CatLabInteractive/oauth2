@@ -50,7 +50,10 @@ class AuthorizeController
 		if (! ($user = $this->request->getUser ()))
 		{
 			//echo '<p>' . ('This page is only available for registered users.') . '</p>';
-			$login = URLBuilder::getURL ('account/login', array ('return' => URLBuilder::getURL ('oauth2/authorize/next', $_GET)));
+			$login = URLBuilder::getURL ('account/login', array (
+				'return' => URLBuilder::getURL ('oauth2/authorize/next', $_GET),
+				'cancel' => URLBuilder::getURL ('oauth2/authorize/next', $_GET)
+			));
 
 			return \Neuron\Net\Response::redirect ($login);
 		}
