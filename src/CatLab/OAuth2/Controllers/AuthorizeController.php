@@ -62,6 +62,8 @@ class AuthorizeController
 		if ($cancel = $this->request->input ('cancel'))
 		{
 			$server->handleAuthorizeRequest($request, $response, false, null);
+			$response->send ();
+			return;
 		}
 
 		$user_id = $user->getId ();
