@@ -1,5 +1,5 @@
 {
-  "name": "catlabinteractive/accounts",
+  "name": "catlabinteractive/oauth2",
   "type": "library",
   "description": "Very light php framework. Should probably not be used.",
   "keywords": ["framework"],
