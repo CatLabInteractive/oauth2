@@ -13,6 +13,12 @@ class AuthorizeController
 
 	public function authorize ()
 	{
+		// Check for reset
+		if ($reset = $this->request->input ('reset'))
+		{
+			$this->request->getSession ()->set ('catlab-user-id', null);
+		}
+
 		$server = OAuth2Service::getInstance ()->getServer ();
 		$request = OAuth2Service::getInstance ()->translateRequest ($this->request);
 
