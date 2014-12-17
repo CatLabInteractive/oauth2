@@ -1,7 +1,7 @@
 {
   "name": "catlabinteractive/oauth2",
   "type": "library",
-  "description": "Very light php framework. Should probably not be used.",
+  "description": "OAuth2 Module for neuron framework",
   "keywords": ["framework"],
   "homepage":"http://github.com/catlabinteractive/neuron",
   "license": "MIT",
