@@ -120,7 +120,7 @@ class AuthorizeController
 
 	private function showAuthorizationDialog ($clientdata)
 	{
-		$template = new Template ('CatLab/OAuth2/authorize');
+		$template = new Template ('CatLab/OAuth2/authorize.phpt');
 		$template->set ('clientdata', $clientdata);
 		$template->set ('action', URLBuilder::getURL ('oauth2/authorize', $_GET));
 
