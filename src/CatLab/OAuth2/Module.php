@@ -36,7 +36,7 @@ class Module
 	 */
 	public function setRoutes (\Neuron\Router $router)
 	{
-		$router->match ('GET', $this->routepath . '/authorize', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
+		$router->match ('GET|POST', $this->routepath . '/authorize', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
 	}
 
 	/**
