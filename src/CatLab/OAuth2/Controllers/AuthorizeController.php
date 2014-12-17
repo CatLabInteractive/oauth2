@@ -2,6 +2,7 @@
 namespace CatLab\OAuth2\Controllers;
 
 use CatLab\OAuth2\Models\OAuth2Service;
+use Neuron\Application;
 use Neuron\Core\Template;
 use Neuron\DB\Query;
 use Neuron\URLBuilder;
@@ -111,6 +112,20 @@ class AuthorizeController
 		$response->send();
 
 		return;
+	}
+
+	private function storeAccessTokenInSession (\OAuth2\ResponseInterface $response)
+	{
+		$location = $response->getHttpHeader ('Location');
+		$parsed = parse_url ($location);
+		$fragment = $parsed['fragment'];
+
+		parse_str ($fragment, $attributes);
+		if (isset ($attributes['access_token']))
+		{
+			//$_SESSION['oauth2_access_token'] = $attributes['access_token'];
+			Application::getInstance ()->getRouter ()->getRequest ()->getSession ()->set ('oauth2_access_token', $attributes['access_token']);
+		}
 	}
 
 	private function checkForLogout (\OAuth2\Server $server)
