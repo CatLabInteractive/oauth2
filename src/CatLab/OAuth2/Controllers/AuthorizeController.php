@@ -120,9 +120,9 @@ class AuthorizeController
 
 	private function showAuthorizationDialog ($clientdata)
 	{
-		$template = new Template ();
+		$template = new Template ('CatLab/OAuth2/authorize');
 		$template->set ('clientdata', $clientdata);
-		$template->set ('action', URLBuilder::getURL ('CatLab/OAuth2/authorize', $_GET));
+		$template->set ('action', URLBuilder::getURL ('oauth2/authorize', $_GET));
 
 		return \Neuron\Net\Response::template ($template);
 	}
