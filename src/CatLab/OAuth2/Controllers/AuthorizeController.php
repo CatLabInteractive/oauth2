@@ -13,18 +13,27 @@ class AuthorizeController
 
 	public function authorize ()
 	{
+
 		// Check for reset
 		if ($reset = $this->request->input ('reset'))
 		{
 			$this->request->getSession ()->set ('catlab-user-id', null);
 		}
 
+		$display = 'mobile';
+
 		$server = OAuth2Service::getInstance ()->getServer ();
 		$request = OAuth2Service::getInstance ()->translateRequest ($this->request);
 
-		$display = 'mobile';
-
 		$response = new Response();
+
+		// Check for cancel parameter
+		if ($this->request->input ('cancel'))
+		{
+			$server->handleAuthorizeRequest($request, $response, false, null);
+			$response->send ();
+			return;
+		}
 
 		// validate the authorize request
 		if (!$server->validateAuthorizeRequest($request, $response))
@@ -56,14 +65,6 @@ class AuthorizeController
 			));
 
 			return \Neuron\Net\Response::redirect ($login);
-		}
-
-		// Check for cancel parameter
-		if ($cancel = $this->request->input ('cancel'))
-		{
-			$server->handleAuthorizeRequest($request, $response, false, null);
-			$response->send ();
-			return;
 		}
 
 		$user_id = $user->getId ();
