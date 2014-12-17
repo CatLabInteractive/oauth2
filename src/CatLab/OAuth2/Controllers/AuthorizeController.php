@@ -52,10 +52,16 @@ class AuthorizeController
 			//echo '<p>' . ('This page is only available for registered users.') . '</p>';
 			$login = URLBuilder::getURL ('account/login', array (
 				'return' => URLBuilder::getURL ('oauth2/authorize', $_GET),
-				'cancel' => URLBuilder::getURL ('oauth2/authorize', $_GET)
+				'cancel' => URLBuilder::getURL ('oauth2/authorize', array_merge ($_GET, array ('cancel' => 1)))
 			));
 
 			return \Neuron\Net\Response::redirect ($login);
+		}
+
+		// Check for cancel parameter
+		if ($cancel = $this->request->input ('cancel'))
+		{
+			$server->handleAuthorizeRequest($request, $response, false, null);
 		}
 
 		$user_id = $user->getId ();
