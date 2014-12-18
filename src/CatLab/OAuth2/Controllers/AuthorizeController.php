@@ -18,6 +18,7 @@ class AuthorizeController
 		if ($reset = $this->request->input ('reset'))
 		{
 			$this->request->getSession ()->set ('catlab-user-id', null);
+			unset ($_GET['reset']);
 		}
 
 		$display = 'mobile';
