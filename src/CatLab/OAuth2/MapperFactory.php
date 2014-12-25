@@ -47,7 +47,7 @@ class MapperFactory {
 	 */
 	public static function getAccessTokenMapper ()
 	{
-		return self::getInstance ()->getMapper ('accesstoken', '\CatLab\OAuth2\AccessTokenMapper');
+		return self::getInstance ()->getMapper ('accesstoken', '\CatLab\OAuth2\Mappers\AccessTokenMapper');
 	}
 
 }
