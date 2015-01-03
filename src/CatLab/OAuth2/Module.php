@@ -4,6 +4,7 @@ namespace CatLab\OAuth2;
 
 use Neuron\Core\Template;
 use Neuron\Tools\Text;
+use Neuron\URLBuilder;
 
 class Module
 	implements \Neuron\Interfaces\Module
@@ -37,6 +38,7 @@ class Module
 	public function setRoutes (\Neuron\Router $router)
 	{
 		$router->match ('GET|POST', $this->routepath . '/authorize', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
+		$router->match ('GET|POST', $this->routepath . '/register', '\CatLab\OAuth2\Controllers\RegisterController@register');
 	}
 
 	/**
@@ -45,5 +47,15 @@ class Module
 	public function getRoutePath ()
 	{
 		return $this->routepath;
+	}
+
+	/**
+	 * @param $subpath
+	 * @param array $params
+	 * @return string
+	 */
+	public function getURL ($subpath, $params = array ())
+	{
+		return URLBuilder::getURL ($this->routepath . $subpath, $params);
 	}
 }

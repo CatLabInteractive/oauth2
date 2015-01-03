@@ -10,12 +10,21 @@
     {
       "type": "vcs",
       "url": "https://github.com/catlabinteractive/neuron"
+    },
+
+    {
+      "type" : "vcs",
+      "url" : "https://github.com/catlabinteractive/Accounts"
     }
   ],
 
   "require": {
     "catlabinteractive/neuron": "dev-master",
     "bshaffer/oauth2-server-php": "v1.0"
+  },
+
+  "require-dev" : {
+    "catlabinteractive/accounts" : "dev-master"
   },
 
   "authors" : [

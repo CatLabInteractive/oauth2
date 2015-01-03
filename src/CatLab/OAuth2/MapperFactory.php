@@ -9,6 +9,7 @@
 namespace CatLab\OAuth2;
 
 use CatLab\OAuth2\Mappers\AccessTokenMapper;
+use CatLab\OAuth2\Mappers\ApplicationMapper;
 
 class MapperFactory {
 
@@ -50,4 +51,11 @@ class MapperFactory {
 		return self::getInstance ()->getMapper ('accesstoken', '\CatLab\OAuth2\Mappers\AccessTokenMapper');
 	}
 
+	/**
+	 * @return ApplicationMapper
+	 */
+	public static function getApplicationMapper ()
+	{
+		return self::getInstance ()->getMapper ('application', '\CatLab\OAuth2\Mappers\ApplicationMapper');
+	}
 }

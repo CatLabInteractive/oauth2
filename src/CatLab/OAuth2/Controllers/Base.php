@@ -10,7 +10,7 @@ namespace CatLab\OAuth2\Controllers;
 
 use Neuron\Exceptions\InvalidParameter;
 use Neuron\Interfaces\Controller;
-use Neuron\Interfaces\Module;
+use CatLab\OAuth2\Module;
 use Neuron\Net\Request;
 
 abstract class Base
