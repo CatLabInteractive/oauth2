@@ -56,6 +56,6 @@ class Module
 	 */
 	public function getURL ($subpath, $params = array ())
 	{
-		return URLBuilder::getURL ($this->routepath . $subpath, $params);
+		return URLBuilder::getURL (URLBuilder::partify ($this->routepath) . $subpath, $params);
 	}
 }
