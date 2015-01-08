@@ -39,6 +39,26 @@ class Module
 	{
 		$router->match ('GET|POST', $this->routepath . '/authorize', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
 		$router->match ('GET|POST', $this->routepath . '/register', '\CatLab\OAuth2\Controllers\RegisterController@register');
+
+		// Add filter
+		$router->addFilter ('oauth2', array ($this, 'routerVerifier'));
+	}
+
+	private function routerVerifier (\Neuron\Net\Request $request)
+	{
+		if (Verifier::isValid ($request))
+			return true;
+
+		return $this->setAccessHeaders (\Neuron\Net\Response::error ('Provided oauth2 signature is invalid', 400));
+	}
+
+	private function setAccessHeaders (\Neuron\Net\Response $response)
+	{
+		$response->setHeader ('Access-Control-Allow-Origin', '*');
+		$response->setHeader ('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
+		$response->setHeader ('Access-Control-Allow-Headers', 'origin, x-requested-with, content-type, access_token, authorization');
+
+		return $response;
 	}
 
 	/**
