@@ -3,6 +3,7 @@
 namespace CatLab\OAuth2;
 
 use CatLab\OAuth2\Models\OAuth2Service;
+use Neuron\Exceptions\InvalidParameter;
 use Neuron\Net\Request;
 
 class Verifier
@@ -46,6 +47,9 @@ class Verifier
 
 	public static function getUserId ()
 	{
+		if (!isset (self::getInstance ()->userid))
+			throw new InvalidParameter ("isValid was not called, cannot get user id.");
+
 		return self::getInstance ()->userid;
 	}
 
