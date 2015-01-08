@@ -44,7 +44,7 @@ class Module
 		$router->addFilter ('oauth2', array ($this, 'routerVerifier'));
 	}
 
-	private function routerVerifier (\Neuron\Net\Request $request)
+	public function routerVerifier (\Neuron\Net\Request $request)
 	{
 		if (Verifier::isValid ($request))
 			return true;
