@@ -44,9 +44,9 @@ class Module
 		$router->addFilter ('oauth2', array ($this, 'routerVerifier'));
 	}
 
-	public function routerVerifier (\Neuron\Net\Request $request)
+	public function routerVerifier (\Neuron\Models\Router\Filter $filter)
 	{
-		if (Verifier::isValid ($request))
+		if (Verifier::isValid ($filter->getRequest ()))
 			return true;
 
 		return $this->setAccessHeaders (\Neuron\Net\Response::error ('Provided oauth2 signature is invalid', 400));
