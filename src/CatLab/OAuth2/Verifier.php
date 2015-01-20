@@ -53,4 +53,12 @@ class Verifier
 		return self::getInstance ()->userid;
 	}
 
+	public static function getAccessToken ()
+	{
+		if (!isset (self::getInstance ()->token))
+			throw new InvalidParameter ("isValid was not called, cannot get access token.");
+
+		return self::getInstance ()->token;
+	}
+
 }
