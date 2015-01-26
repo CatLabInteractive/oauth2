@@ -37,10 +37,9 @@ class Module
 	{
 		$request->addUserCallback ('oauth2', function (\Neuron\Net\Request $request) {
 
-			$userid = $request->getSession ()->get ('catlab-user-id');
+			if (Verifier::isValid ($request)) {
+				$userid = Verifier::getUserId ();
 
-			if ($userid)
-			{
 				$user = \Neuron\MapperFactory::getUserMapper ()->getFromId ($userid);
 				if ($user)
 					return $user;
