@@ -2,6 +2,7 @@
 
 namespace CatLab\OAuth2;
 
+use CatLab\OAuth2\ErrorResponders\HTML;
 use CatLab\OAuth2\Models\OAuth2Service;
 use Neuron\Application;
 use Neuron\Core\Template;
@@ -14,6 +15,9 @@ class Module
 
 	/** @var string $routepath */
 	private $routepath;
+
+	/** @var \CatLab\OAuth2\ErrorResponders\Responder */
+	private $errorResponder;
 
 	/**
 	 * Set template paths, config vars, etc
@@ -32,6 +36,18 @@ class Module
 
 		// Add locales
 		Text::getInstance ()->addPath ('catlab.oauth2', __DIR__ . '/locales/');
+
+		$this->setErrorResponder (new HTML ());
+	}
+
+	public function setErrorResponder (\CatLab\OAuth2\ErrorResponders\Responder $responder)
+	{
+		$this->errorResponder = $responder;
+	}
+
+	public function getError ($message)
+	{
+		return $this->errorResponder->getError ($message);
 	}
 
 	public function setRequestUser (\Neuron\Net\Request $request)
@@ -89,7 +105,7 @@ class Module
 			return true;
 		}
 
-		return $this->setAccessHeaders (\Neuron\Net\Response::error ('Provided oauth2 signature is invalid', 400));
+		return $this->setAccessHeaders ($this->getError ('Provided oauth2 signature is invalid', 400));
 	}
 
 	private function setAccessHeaders (\Neuron\Net\Response $response)
