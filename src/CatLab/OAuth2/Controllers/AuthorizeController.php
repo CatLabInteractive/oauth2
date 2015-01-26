@@ -93,7 +93,7 @@ class AuthorizeController
 			$this->storeAccessTokenInSession ($response);
 
 			$response->send ();
-			return \Neuron\FrontController::getInstance()->getResponse ();
+			//return \Neuron\FrontController::getInstance()->getResponse ();
 		}
 
 		// display an authorization form
