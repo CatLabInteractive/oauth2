@@ -94,6 +94,7 @@ class AuthorizeController
 
 			$response->send ();
 			//return \Neuron\FrontController::getInstance()->getResponse ();
+			return;
 		}
 
 		// display an authorization form
