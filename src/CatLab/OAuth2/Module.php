@@ -2,6 +2,7 @@
 
 namespace CatLab\OAuth2;
 
+use Neuron\Application;
 use Neuron\Core\Template;
 use Neuron\Tools\Text;
 use Neuron\URLBuilder;
@@ -26,8 +27,27 @@ class Module
 		// Add templates
 		Template::addPath (__DIR__ . '/templates/', 'CatLab/OAuth2/');
 
+		Application::getInstance ()->on ('dispatch:before', array ($this, 'setRequestUser'));
+
 		// Add locales
 		Text::getInstance ()->addPath ('catlab.oauth2', __DIR__ . '/locales/');
+	}
+
+	public function setRequestUser (\Neuron\Net\Request $request)
+	{
+		$request->addUserCallback ('oauth2', function (\Neuron\Net\Request $request) {
+
+			$userid = $request->getSession ()->get ('catlab-user-id');
+
+			if ($userid)
+			{
+				$user = \Neuron\MapperFactory::getUserMapper ()->getFromId ($userid);
+				if ($user)
+					return $user;
+			}
+
+			return null;
+		});
 	}
 
 	/**
@@ -46,8 +66,9 @@ class Module
 
 	public function routerVerifier (\Neuron\Models\Router\Filter $filter)
 	{
-		if (Verifier::isValid ($filter->getRequest ()))
+		if (Verifier::isValid ($filter->getRequest ())) {
 			return true;
+		}
 
 		return $this->setAccessHeaders (\Neuron\Net\Response::error ('Provided oauth2 signature is invalid', 400));
 	}
