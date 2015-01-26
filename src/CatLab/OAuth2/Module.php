@@ -2,6 +2,7 @@
 
 namespace CatLab\OAuth2;
 
+use CatLab\OAuth2\Models\OAuth2Service;
 use Neuron\Application;
 use Neuron\Core\Template;
 use Neuron\Tools\Text;
@@ -47,6 +48,25 @@ class Module
 
 			return null;
 		});
+	}
+
+	/**
+	 * Set the scopes
+	 * @param $defaultScope
+	 * @param array $supportedScopes
+	 */
+	public function setScopes ($defaultScope, array $supportedScopes)
+	{
+		// configure your available scopes
+
+		$memory = new \OAuth2\Storage\Memory (array(
+			'default_scope' => $defaultScope,
+			'supported_scopes' => $supportedScopes
+		));
+		$scopeUtil = new \OAuth2\Scope($memory);
+
+		$server = OAuth2Service::getInstance ()->getServer ();
+		$server->setScopeUtil($scopeUtil);
 	}
 
 	/**
