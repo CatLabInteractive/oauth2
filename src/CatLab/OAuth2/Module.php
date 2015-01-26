@@ -3,6 +3,7 @@
 namespace CatLab\OAuth2;
 
 use CatLab\OAuth2\ErrorResponders\HTML;
+use CatLab\OAuth2\ErrorResponders\JSON;
 use CatLab\OAuth2\Models\OAuth2Service;
 use Neuron\Application;
 use Neuron\Core\Template;
@@ -37,7 +38,7 @@ class Module
 		// Add locales
 		Text::getInstance ()->addPath ('catlab.oauth2', __DIR__ . '/locales/');
 
-		$this->setErrorResponder (new HTML ());
+		$this->setErrorResponder (new JSON ());
 	}
 
 	public function setErrorResponder (\CatLab\OAuth2\ErrorResponders\Responder $responder)
