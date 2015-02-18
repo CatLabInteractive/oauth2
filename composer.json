@@ -20,7 +20,7 @@
 
   "require": {
     "catlabinteractive/neuron": "dev-master",
-    "bshaffer/oauth2-server-php": "v1.0"
+    "bshaffer/oauth2-server-php": "dev-master"
   },
 
   "require-dev" : {
