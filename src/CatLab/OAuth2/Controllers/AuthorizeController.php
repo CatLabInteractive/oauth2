@@ -138,7 +138,12 @@ class AuthorizeController
 	{
 		$location = $response->getHttpHeader ('Location');
 		$parsed = parse_url ($location);
-		$fragment = $parsed['fragment'];
+
+		if (isset ($parsed['fragment']))
+			$fragment = $parsed['fragment'];
+		else {
+			$fragment = $parsed['query'];
+		}
 
 		parse_str ($fragment, $attributes);
 		if (isset ($attributes['access_token']))
@@ -146,6 +151,15 @@ class AuthorizeController
 			//$_SESSION['oauth2_access_token'] = $attributes['access_token'];
 			Application::getInstance ()->getRouter ()->getRequest ()->getSession ()->set ('oauth2_access_token', $attributes['access_token']);
 		}
+	}
+
+	public function token ()
+	{
+		$server = OAuth2Service::getInstance ()->getServer ();
+		$request = OAuth2Service::getInstance ()->translateRequest ($this->request);
+		$response = new Response ();
+		$server->handleTokenRequest ($request, $response);
+		$response->send ();
 	}
 
 	private function checkForLogout (\OAuth2\Server $server)
