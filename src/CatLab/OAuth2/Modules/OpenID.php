@@ -24,7 +24,7 @@ class OpenID
 			)
 		);
 
-		$this->setScopes ('openid', 'email', 'profile');
+		$this->setScopes ('default', array ('openid', 'email', 'profile'));
 	}
 
 	/**
