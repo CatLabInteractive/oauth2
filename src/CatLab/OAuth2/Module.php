@@ -3,7 +3,7 @@
 namespace CatLab\OAuth2;
 
 class Module
-	extends \CatLab\Oauth2\Modules\OAuth2
+	extends \CatLab\OAuth2\Modules\OAuth2
 {
 
 }

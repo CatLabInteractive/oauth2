@@ -4,6 +4,7 @@ namespace CatLab\OAuth2\Controllers;
 
 
 use CatLab\OAuth2\MapperFactory;
+use CatLab\OAuth2\Models\OAuth2Service;
 use Neuron\Core\Template;
 use Neuron\Net\Response;
 use Neuron\URLBuilder;
