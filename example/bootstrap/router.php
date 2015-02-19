@@ -4,7 +4,7 @@
 $router = new \Neuron\Router ();
 
 // Accounts module
-$oauth2module = new \CatLab\OAuth2\Module ();
+$oauth2module = new \CatLab\OAuth2\Modules\OAuth2 ();
 
 // Make the module available on /account
 $router->module ('/oauth2', $oauth2module);
