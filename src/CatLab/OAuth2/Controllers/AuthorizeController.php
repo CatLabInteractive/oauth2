@@ -6,6 +6,7 @@ use Neuron\Application;
 use Neuron\Core\Template;
 use Neuron\DB\Query;
 use Neuron\URLBuilder;
+use OAuth2\Request;
 use OAuth2\Response;
 
 class AuthorizeController
@@ -156,7 +157,11 @@ class AuthorizeController
 	public function token ()
 	{
 		$server = OAuth2Service::getInstance ()->getServer ();
-		$request = OAuth2Service::getInstance ()->translateRequest ($this->request);
+		//$request = OAuth2Service::getInstance ()->translateRequest ($this->request);
+		$request = Request::createFromGlobals ();
+
+
+
 		$response = new Response ();
 		$server->handleTokenRequest ($request, $response);
 		$response->send ();
