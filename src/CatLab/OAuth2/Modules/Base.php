@@ -75,7 +75,7 @@ abstract class Base
 		$this->routepath = $routepath;
 
 		// Add templates
-		Template::addPath (__DIR__ . '/templates/', 'CatLab/OAuth2/');
+		Template::addPath (__DIR__ . '/../templates/', 'CatLab/OAuth2/');
 
 		Application::getInstance ()->on ('dispatch:before', array ($this, 'setRequestUser'));
 
