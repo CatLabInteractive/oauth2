@@ -30,7 +30,7 @@ abstract class Base
 	 */
 	public function __construct (\Neuron\Interfaces\Module $module = null)
 	{
-		if (! ($module instanceof Module))
+		if (! ($module instanceof Base))
 		{
 			throw new InvalidParameter ("Controller must be instanciated with a \\CatLab\\OAuth\\Module. Instance of " . get_class ($module) . " given.");
 		}
