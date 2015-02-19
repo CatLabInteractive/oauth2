@@ -10,17 +10,26 @@ use OAuth2\Storage\Pdo;
 
 class OAuth2Service {
 
+	static $in;
+
 	public static function getInstance ()
 	{
-		static $in;
-		if (!isset ($in))
+		if (!isset (self::$in))
 		{
-			$in = new self ();
+			self::$in = new self ();
 		}
-		return $in;
+		return self::$in;
 	}
 
-	private function __construct ()
+	public static function instanciate ($settings)
+	{
+		self::$in = new self ($settings);
+	}
+
+	private $server;
+	private $storage;
+
+	private function __construct ($settings = array ())
 	{
 		$dsn = 'mysql:dbname='.Config::get ('database.mysql.database').';host='.Config::get ('database.mysql.host');
 		$username = Config::get ('database.mysql.username');
@@ -39,12 +48,14 @@ class OAuth2Service {
 		);
 
 		$storage = new Pdo (array('dsn' => $dsn, 'username' => $username, 'password' => $password), $pdoconfig);
+		$this->storage = $storage;
+
 		//$storage = DB::connection()->getPdo();
 
-		$this->server = new Server($storage, array (
-			'allow_implicit' => true,
-			'access_lifetime' => 60 * 60 * 24 * 365 * 2
-		));
+		$settings['allow_implicit'] = true;
+		$settings['access_lifetime'] = 60 * 60 * 24 * 365 * 2;
+
+		$this->server = new Server($storage, $settings);
 
 		$this->server->addGrantType (new AuthorizationCode($storage));
 
@@ -60,6 +71,11 @@ class OAuth2Service {
 	public function getServer ()
 	{
 		return $this->server;
+	}
+
+	public function getStorage ()
+	{
+		return $this->storage;
 	}
 
 	public function translateRequest (\Neuron\Net\Request $request)

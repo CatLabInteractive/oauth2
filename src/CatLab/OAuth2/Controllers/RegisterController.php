@@ -48,4 +48,10 @@ class RegisterController
 		$template->set ('action', $this->module->getURL ('register'));
 		return Response::template ($template);
 	}
+
+	public function setup ()
+	{
+		echo '<pre>';
+		echo OAuth2Service::getInstance ()->getStorage ()->getBuildSql ();
+	}
 }
