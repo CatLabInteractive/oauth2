@@ -22,6 +22,9 @@ class AuthorizeController
 			unset ($_GET['reset']);
 		}
 
+		var_dump ($this->request->getSession ());
+		exit;
+
 		$display = 'mobile';
 
 		$server = OAuth2Service::getInstance ()->getServer ();
