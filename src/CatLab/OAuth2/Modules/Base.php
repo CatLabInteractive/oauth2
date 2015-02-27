@@ -138,7 +138,7 @@ abstract class Base
 		$router->match ('GET|POST', $this->routepath . '/setup', '\CatLab\OAuth2\Controllers\RegisterController@setup');
 
 		// And register
-		$router->match ('GET|POST', $this->routepath . '/authorize', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
+		$router->match ('GET|POST', $this->routepath . '/authorize/{param?}', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
 		$router->match ('GET|POST', $this->routepath . '/register', '\CatLab\OAuth2\Controllers\RegisterController@register');
 		$router->match ('GET|POST', $this->routepath . '/token', '\CatLab\OAuth2\Controllers\AuthorizeController@token');
 	}

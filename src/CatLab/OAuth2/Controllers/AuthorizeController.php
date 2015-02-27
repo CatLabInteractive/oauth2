@@ -12,11 +12,14 @@ use OAuth2\Response;
 class AuthorizeController
 	extends Base {
 
-	public function authorize ()
+	public function authorize ($parameter = null)
 	{
 
 		// Check for reset
-		if ($this->request->input ('reset'))
+		if (
+			$parameter == 'reset' ||
+			$this->request->input ('reset')
+		)
 		{
 			$this->request->getSession ()->set ('catlab-user-id', null);
 			unset ($_GET['reset']);
