@@ -16,14 +16,13 @@ class AuthorizeController
 	{
 
 		// Check for reset
-		if ($reset = $this->request->input ('reset'))
+		if ($this->request->input ('reset'))
 		{
 			$this->request->getSession ()->set ('catlab-user-id', null);
 			unset ($_GET['reset']);
-		}
 
-		var_dump ($this->request->getSession ());
-		exit;
+			return \Neuron\Net\Response::redirect (URLBuilder::getURL ('oauth2/authorize', $_GET));
+		}
 
 		$display = 'mobile';
 
