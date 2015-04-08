@@ -5,7 +5,6 @@ namespace CatLab\OAuth2\Models;
 use Neuron\Config;
 use OAuth2\GrantType\AuthorizationCode;
 use OAuth2\GrantType\RefreshToken;
-use OAuth2\Server;
 use OAuth2\Storage\Pdo;
 
 class OAuth2Service {
@@ -76,6 +75,13 @@ class OAuth2Service {
 	public function getStorage ()
 	{
 		return $this->storage;
+	}
+
+	public function getGuestAccessToken () {
+
+		// A guest doens't really have a client id...
+		return $this->getServer ()->getGuestAccessToken ();
+
 	}
 
 	public function translateRequest (\Neuron\Net\Request $request)
