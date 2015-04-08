@@ -80,7 +80,8 @@ class OAuth2Service {
 	public function getGuestAccessToken () {
 
 		// A guest doens't really have a client id...
-		return $this->getServer ()->getGuestAccessToken ();
+		$token = $this->getServer ()->getGuestAccessToken ();
+		return $token['access_token'];
 
 	}
 

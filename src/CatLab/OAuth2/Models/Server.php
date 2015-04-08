@@ -15,6 +15,6 @@ class Server
 
 	public function getGuestAccessToken () {
 		$responsetypes = $this->getDefaultResponseTypes ();
-		return $responsetypes['code']->createAuthorizationCode ('__guest__', -1, 'guest');
+		return $responsetypes['token']->createAccessToken ('__guest__', -1, 'guest');
 	}
 }
