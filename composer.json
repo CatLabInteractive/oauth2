@@ -19,12 +19,12 @@
   ],
 
   "require": {
-    "catlabinteractive/neuron": "dev-master",
+    "catlabinteractive/neuron": "2.*",
     "bshaffer/oauth2-server-php": "1.6"
   },
 
   "require-dev" : {
-    "catlabinteractive/accounts" : "dev-master"
+    "catlabinteractive/accounts" : "2.*"
   },
 
   "authors" : [
