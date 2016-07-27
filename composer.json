@@ -24,7 +24,7 @@
   },
 
   "require-dev" : {
-    "catlabinteractive/accounts" : "2.*"
+    "catlabinteractive/accounts" : "0.1.*"
   },
 
   "authors" : [
