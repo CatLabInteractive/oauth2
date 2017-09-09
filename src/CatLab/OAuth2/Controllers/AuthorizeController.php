@@ -159,10 +159,10 @@ class AuthorizeController extends Base
                 ->getRequest()
                 ->getSession()
                 ->set('oauth2_access_token', $attributes['access_token']);
-        }
 
-        // Also notify the module.
-        $this->module->onAuthorize($user, $request, $response, $attributes['access_token'], $clientid);
+            // Also notify the module.
+            $this->module->onAuthorize($user, $request, $response, $attributes['access_token'], $clientid);
+        }
     }
 
     public function token()
