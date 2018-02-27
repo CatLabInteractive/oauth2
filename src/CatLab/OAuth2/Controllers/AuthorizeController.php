@@ -67,6 +67,17 @@ class AuthorizeController extends Base
                 'cancel' => URLBuilder::getURL('oauth2/authorize', array_merge($_GET, array('cancel' => 1)))
             ));
 
+            // Store some details.
+            $session = Application::getInstance()
+                ->getRouter()
+                ->getRequest()
+                ->getSession();
+
+            $session->set('oauth2_client_id', $clientid);
+            if (isset($clientdata['product_id'])) {
+                $session->set('product_id', $clientdata['product_id']);
+            }
+
             return \Neuron\Net\Response::redirect($login);
         }
 
@@ -162,6 +173,9 @@ class AuthorizeController extends Base
 
             // Also notify the module.
             $this->module->onAuthorize($user, $request, $response, $attributes['access_token'], $clientid);
+        } elseif (isset ($attributes['code'])) {
+            // Also notify the module.
+            $this->module->onAuthorize($user, $request, $response, $attributes['code'], $clientid);
         }
     }
 
