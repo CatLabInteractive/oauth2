@@ -128,3 +128,20 @@ CREATE TABLE IF NOT EXISTS `oauth2_users` (
   `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+ALTER TABLE oauth2_clients ADD remove_user_uri TEXT NULL;
+
+CREATE TABLE oauth2_client_users (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT NULL,
+	client_id varchar(80) NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL,
+	CONSTRAINT oauth2_client_uses_PK PRIMARY KEY (id),
+	CONSTRAINT oauth2_client_uses_UN UNIQUE KEY (client_id,user_id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4;
+
+replace into oauth2_client_users (user_id, client_id) select user_id, client_id from oauth2_access_tokens;

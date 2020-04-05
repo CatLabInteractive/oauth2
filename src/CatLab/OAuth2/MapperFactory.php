@@ -1,16 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: daedeloth
- * Date: 25/12/14
- * Time: 15:55
- */
 
 namespace CatLab\OAuth2;
 
 use CatLab\OAuth2\Mappers\AccessTokenMapper;
 use CatLab\OAuth2\Mappers\ApplicationMapper;
+use CatLab\OAuth2\Mappers\ClientUsageMapper;
 
+/**
+ * Class MapperFactory
+ * @package CatLab\OAuth2
+ */
 class MapperFactory {
 
 	public static function getInstance ()
@@ -48,7 +47,7 @@ class MapperFactory {
 	 */
 	public static function getAccessTokenMapper ()
 	{
-		return self::getInstance ()->getMapper ('accesstoken', '\CatLab\OAuth2\Mappers\AccessTokenMapper');
+		return self::getInstance ()->getMapper ('accesstoken', AccessTokenMapper::class);
 	}
 
 	/**
@@ -56,6 +55,14 @@ class MapperFactory {
 	 */
 	public static function getApplicationMapper ()
 	{
-		return self::getInstance ()->getMapper ('application', '\CatLab\OAuth2\Mappers\ApplicationMapper');
+		return self::getInstance ()->getMapper ('application', ApplicationMapper::class);
 	}
+
+    /**
+     * @return ClientUsageMapper
+     */
+	public static function getClientUsageMapper()
+    {
+        return self::getInstance ()->getMapper ('clientUsage', ClientUsageMapper::class);
+    }
 }

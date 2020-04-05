@@ -4,6 +4,7 @@ namespace CatLab\OAuth2\Modules;
 
 use CatLab\OAuth2\ErrorResponders\HTML;
 use CatLab\OAuth2\ErrorResponders\JSON;
+use CatLab\OAuth2\MapperFactory;
 use CatLab\OAuth2\Models\OAuth2Service;
 use Neuron\Application;
 use Neuron\Core\Template;
@@ -163,5 +164,7 @@ abstract class Base
             'accessToken' => $accessToken,
             'clientId' => $clientId
         ]);
+
+        MapperFactory::getClientUsageMapper()->touch($user, $clientId);
     }
 }
