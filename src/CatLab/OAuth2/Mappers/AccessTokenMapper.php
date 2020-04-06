@@ -8,6 +8,7 @@
 
 namespace CatLab\OAuth2\Mappers;
 
+use CatLab\Accounts\Models\User;
 use Neuron\DB\Query;
 
 class AccessTokenMapper {
@@ -34,5 +35,13 @@ class AccessTokenMapper {
 		}
 		return null;
 	}
+
+    /**
+     * @param User $user
+     */
+	public function deleteFromUser(User $user)
+    {
+        Query::delete('oauth2_access_tokens', [ 'user_id' => $user->getId() ])->execute();
+    }
 
 }
