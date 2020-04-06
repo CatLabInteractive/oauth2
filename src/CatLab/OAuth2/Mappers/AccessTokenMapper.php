@@ -1,16 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: daedeloth
- * Date: 25/12/14
- * Time: 15:55
- */
 
 namespace CatLab\OAuth2\Mappers;
 
-use CatLab\Accounts\Models\User;
 use Neuron\DB\Query;
+use Neuron\Interfaces\Models\User;
 
+/**
+ * Class AccessTokenMapper
+ * @package CatLab\OAuth2\Mappers
+ */
 class AccessTokenMapper {
 
 	/**
