@@ -26,6 +26,11 @@ class AuthorizeController extends Base
         'utm_content'
     ];
 
+    /**
+     * @param null $parameter
+     * @return \Neuron\Net\Response|void
+     * @throws \Neuron\Exceptions\DataNotSet
+     */
     public function authorize($parameter = null)
     {
         // Check for reset
@@ -34,9 +39,10 @@ class AuthorizeController extends Base
             $this->request->input('reset')
         ) {
             $this->request->getSession()->set('catlab-user-id', null);
+            $this->request->clearUser();
             unset ($_GET['reset']);
 
-            return \Neuron\Net\Response::redirect(URLBuilder::getURL('oauth2/authorize', $_GET));
+            //return \Neuron\Net\Response::redirect(URLBuilder::getURL('oauth2/authorize', $_GET));
         }
 
         $display = 'mobile';
@@ -168,7 +174,7 @@ class AuthorizeController extends Base
             }
         }
 
-        $returnUrl = URLBuilder::getURL('oauth2/authorize', $loginQueryParameters);
+        $returnUrl = URLBuilder::getURL('oauth2/authorize', $returnQueryParameters);
 
         return URLBuilder::getURL(
             'account/login',
