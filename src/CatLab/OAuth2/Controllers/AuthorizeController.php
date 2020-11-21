@@ -13,6 +13,18 @@ use OAuth2\Response;
 
 class AuthorizeController extends Base
 {
+    /**
+     * These parameters are not stored in the return url but are rather passed as separate parameters.
+     * @var string[]
+     */
+    protected $trackingQueryParameters = [
+        'utm_referrer',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content'
+    ];
 
     public function authorize($parameter = null)
     {
@@ -62,10 +74,8 @@ class AuthorizeController extends Base
 
         if (!($user = $this->request->getUser())) {
             //echo '<p>' . ('This page is only available for registered users.') . '</p>';
-            $login = URLBuilder::getURL('account/login', array(
-                'return' => URLBuilder::getURL('oauth2/authorize', $_GET),
-                'cancel' => URLBuilder::getURL('oauth2/authorize', array_merge($_GET, array('cancel' => 1)))
-            ));
+
+            $login = $this->getLoginUrl();
 
             // Store some details.
             $session = Application::getInstance()
@@ -139,6 +149,37 @@ class AuthorizeController extends Base
         $response->send();
 
         return;
+    }
+
+    /**
+     * Get the redirect url for the user to login
+     * @return string
+     */
+    protected function getLoginUrl()
+    {
+        $returnQueryParameters = [];
+        $loginQueryParameters = [];
+
+        foreach ($_GET as $k => $v) {
+            if (in_array($k, $this->trackingQueryParameters)) {
+                $loginQueryParameters[$k] = $v;
+            } else {
+                $returnQueryParameters[$k] = $v;
+            }
+        }
+
+        $returnUrl = URLBuilder::getURL('oauth2/authorize', $loginQueryParameters);
+
+        return URLBuilder::getURL(
+            'account/login',
+            array_merge(
+                $loginQueryParameters,
+                array(
+                    'return' => $returnUrl,
+                    'cancel' => $returnUrl . '&cancel=1'
+                )
+            )
+        );
     }
 
     /**
