@@ -18,6 +18,7 @@ class AuthorizeController extends Base
      * @var string[]
      */
     protected $trackingQueryParameters = [
+        'utm_abversion',
         'utm_referrer',
         'utm_source',
         'utm_medium',
