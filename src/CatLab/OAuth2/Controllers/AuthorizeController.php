@@ -10,23 +10,10 @@ use Neuron\Interfaces\Models\User;
 use Neuron\URLBuilder;
 use OAuth2\Request;
 use OAuth2\Response;
+use Neuron\Net\QueryTrackingParameters;
 
 class AuthorizeController extends Base
 {
-    /**
-     * These parameters are not stored in the return url but are rather passed as separate parameters.
-     * @var string[]
-     */
-    protected $trackingQueryParameters = [
-        'utm_abversion',
-        'utm_referrer',
-        'utm_source',
-        'utm_medium',
-        'utm_campaign',
-        'utm_term',
-        'utm_content'
-    ];
-
     /**
      * @param null $parameter
      * @return \Neuron\Net\Response|void
@@ -168,7 +155,7 @@ class AuthorizeController extends Base
         $loginQueryParameters = [];
 
         foreach ($_GET as $k => $v) {
-            if (in_array($k, $this->trackingQueryParameters)) {
+            if (in_array($k, QueryTrackingParameters::instance()->queryParameters)) {
                 $loginQueryParameters[$k] = $v;
             } else {
                 $returnQueryParameters[$k] = $v;
