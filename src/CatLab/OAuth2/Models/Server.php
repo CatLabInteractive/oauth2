@@ -2,8 +2,6 @@
 
 namespace CatLab\OAuth2\Models;
 
-use OAuth2\OpenID\Controller\AuthorizeController as OpenIDAuthorizeController;
-
 /**
  * Class Server
  * @package CatLab\OAuth2\Models
@@ -39,7 +37,7 @@ class Server extends \OAuth2\Server {
         $config = array_intersect_key($this->config, array_flip(explode(' ', 'allow_implicit enforce_state require_exact_redirect_uri')));
 
         if ($this->config['use_openid_connect']) {
-            return new OpenIDAuthorizeController($this->storages['client'], $this->responseTypes, $config, $this->getScopeUtil());
+            return new OpenIdAuthorizeController($this->storages['client'], $this->responseTypes, $config, $this->getScopeUtil());
         }
 
         return new AuthorizeController($this->storages['client'], $this->responseTypes, $config, $this->getScopeUtil());
