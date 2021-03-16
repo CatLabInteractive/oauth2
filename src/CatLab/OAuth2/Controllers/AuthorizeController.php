@@ -162,6 +162,10 @@ class AuthorizeController extends Base
             }
         }
 
+        if ($this->request->input('intend')) {
+            $loginQueryParameters['intend'] = $this->request->input('intend');
+        }
+
         $returnUrl = URLBuilder::getURL('oauth2/authorize', $returnQueryParameters);
 
         return URLBuilder::getURL(

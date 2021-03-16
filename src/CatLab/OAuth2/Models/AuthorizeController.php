@@ -55,4 +55,16 @@ class AuthorizeController extends \OAuth2\Controller\AuthorizeController
 
         return false;
     }
+
+    /**
+     * @param \OAuth2\RequestInterface $request
+     * @param \OAuth2\ResponseInterface $response
+     * @param mixed $user_id
+     * @return array|mixed
+     */
+    protected function buildAuthorizeParameters($request, $response, $user_id)
+    {
+        $params = parent::buildAuthorizeParameters($request, $response, $user_id);
+        return TrackingParameterInjector::addTrackingParameters($params, $request, $response, $user_id);
+    }
 }
