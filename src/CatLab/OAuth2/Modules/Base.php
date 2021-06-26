@@ -134,12 +134,18 @@ abstract class Base
         // Add filter
         $router->addFilter('oauth2', array($this, 'routerVerifier'));
 
-        $router->match('GET|POST', $this->routepath . '/setup', '\CatLab\OAuth2\Controllers\RegisterController@setup');
+        $router->match('GET|POST', $this->routepath . '/setup', '\CatLab\OAuth2\Controllers\RegisterController@setup')
+            ->filter('session');
 
         // And register
-        $router->match('GET|POST', $this->routepath . '/authorize/{param?}', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize');
-        $router->match('GET|POST', $this->routepath . '/register', '\CatLab\OAuth2\Controllers\RegisterController@register');
-        $router->match('GET|POST', $this->routepath . '/token', '\CatLab\OAuth2\Controllers\AuthorizeController@token');
+        $router->match('GET|POST', $this->routepath . '/authorize/{param?}', '\CatLab\OAuth2\Controllers\AuthorizeController@authorize')
+            ->filter('session');
+
+        $router->match('GET|POST', $this->routepath . '/register', '\CatLab\OAuth2\Controllers\RegisterController@register')
+            ->filter('session');
+
+        $router->match('GET|POST', $this->routepath . '/token', '\CatLab\OAuth2\Controllers\AuthorizeController@token')
+            ->filter('session');
     }
 
     /**
