@@ -154,8 +154,17 @@ class AuthorizeController extends Base
         $returnQueryParameters = [];
         $loginQueryParameters = [];
 
+        // These parameters will not be included in the return url but will instead be used in our own router
+        $parametersToKeep = array_merge(
+            [
+                'lang',
+                'language'
+            ],
+            QueryTrackingParameters::instance()->queryParameters
+        );
+
         foreach ($_GET as $k => $v) {
-            if (in_array($k, QueryTrackingParameters::instance()->queryParameters)) {
+            if (in_array($k, $parametersToKeep)) {
                 $loginQueryParameters[$k] = $v;
             } else {
                 $returnQueryParameters[$k] = $v;
