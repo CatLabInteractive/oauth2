@@ -27,8 +27,7 @@ class AccessTokenMapper {
 			)
 		)->execute ();
 
-		if ($data)
-		{
+		if (count($data) > 0) {
 			return intval ($data[0]['user_id']);
 		}
 		return null;
