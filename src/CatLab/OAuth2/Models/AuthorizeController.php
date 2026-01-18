@@ -29,7 +29,7 @@ class AuthorizeController extends \OAuth2\Controller\AuthorizeController
 
             // turn into regex
             $pattern = preg_quote($registered_uri,'/');
-            $pattern = str_replace('\*', '[a-zA-Z0-9]*', $pattern);
+            $pattern = str_replace('\*', '[a-zA-Z0-9\-]*', $pattern);
 
             $check = preg_match('/^' . $pattern . '$/i' , $inputUri);
 
