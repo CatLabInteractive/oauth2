@@ -9,7 +9,7 @@
   "require": {
     "php": ">=7.4",
     "catlabinteractive/neuron": "^3.0.0",
-    "bshaffer/oauth2-server-php": "~1.10.0"
+    "bshaffer/oauth2-server-php": "^1.14.2"
   },
 
   "require-dev" : {
