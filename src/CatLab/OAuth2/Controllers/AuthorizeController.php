@@ -49,8 +49,12 @@ class AuthorizeController extends Base
 
         // validate the authorize request
         if (!$server->validateAuthorizeRequest($request, $response)) {
-            $response->send();
-            die;
+            // bshaffer has already decided, per RFC 6749, how to answer an
+            // invalid request (an error redirect back to a valid redirect_uri,
+            // or a plain 4xx JSON error otherwise). Deliver that decision as a
+            // Neuron response instead of send()+die, which killed the whole
+            // PHP process.
+            return $this->toNeuronResponse($response);
         }
 
         $clientid = $server->getAuthorizeController()->getClientId();
@@ -143,6 +147,30 @@ class AuthorizeController extends Base
         $response->send();
 
         return;
+    }
+
+    /**
+     * Translate a bshaffer OAuth2\Response into a Neuron response, mirroring
+     * exactly what OAuth2\Response::send() would emit (status line, HTTP
+     * headers and JSON body), so callers can `return` it through the router
+     * instead of sending it directly and killing the process.
+     *
+     * @param Response $response
+     * @return \Neuron\Net\Response
+     */
+    private function toNeuronResponse(Response $response)
+    {
+        $headers = $response->getHttpHeaders();
+
+        // send() defaults to the json format and sets this Content-Type.
+        if (!isset($headers['Content-Type'])) {
+            $headers['Content-Type'] = 'application/json';
+        }
+
+        $out = \Neuron\Net\Response::fromRaw($response->getResponseBody('json'), $headers);
+        $out->setStatus($response->getStatusCode() ?: 400);
+
+        return $out;
     }
 
     /**
