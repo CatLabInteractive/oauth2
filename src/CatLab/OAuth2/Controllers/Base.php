@@ -28,7 +28,7 @@ abstract class Base
 	 * @param \Neuron\Interfaces\Module $module
 	 * @throws InvalidParameter
 	 */
-	public function __construct (\Neuron\Interfaces\Module $module = null)
+	public function __construct (?\Neuron\Interfaces\Module $module = null)
 	{
 		if (! ($module instanceof \CatLab\OAuth2\Modules\Base))
 		{
